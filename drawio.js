@@ -119,32 +119,3 @@ colorInput.addEventListener('input', () =>{
 //     }
 //     event.preventDefault();
 // }
-
-
-function penSelector(){
-    console.log("INSIDE PEN");
-}
-
-function rectSelector(){
-    console.log("INSIDE rect");
-}
-
-function circleSelector(){
-    console.log("circle INSIDE");
-}
-
-function lineSelector(){
-    console.log("here draw line");
-}
-
-function textSelector(){
-    console.log("Write txt");
-}
-
-function undoSelector(){
-    console.log("UNDO here");
-}
-
-function redoSelector(){
-    console.log("here we redo");
-}
