@@ -1,0 +1,22 @@
+
+#canvas{
+    width: 80%;
+    height: 100%;
+    background-color: aqua;
+    border-style: solid;
+}
+
+#canvasDiv{
+    /* background-color: red; */
+    display:flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.h1{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
