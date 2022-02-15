@@ -1,3 +1,3 @@
-class line{
+class Line{
     
 }

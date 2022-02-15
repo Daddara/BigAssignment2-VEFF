@@ -1,3 +1,3 @@
-class pen {
+class Pen {
     
 }
