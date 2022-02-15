@@ -8,7 +8,8 @@ window.drawio = {
     selectedElement: null,
     availableShapes: {
         RECTANGLE: 'rectangle',
-        PEN: 'pen'
+        PEN: 'pen',
+        LINE: 'line'
     }
 };
 
@@ -43,6 +44,10 @@ $(function () {
             case drawio.availableShapes.PEN:
                 console.log("WE HAVE PEN");
                 drawio.selectedElement = new Pen(pos, drawio.drawColor);
+                break
+            case drawio.availableShapes.LINE:
+                    console.log("WE HAVE LINE");
+                    drawio.selectedElement = new Line(pos,0, 0, drawio.drawColor);
         }
     });
 
