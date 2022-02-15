@@ -11,45 +11,51 @@
         </h1>
         <div id="canvasDiv">
             <div id="toolbar">
-                <div class="select" id="pen" onclick="penSelector()">
-                    <button class="button">
+                <div class="select" id="pen" data-shape="pen">
+                    <button class="button" onclick="penSelector()">
                     PEN
                     </button>
                 </div>
-                <div class="select" id="rect" onclick="rectSelector()">
-                    <button class="button">
+                <div class="select" id="rect" data-shape="rectangle">
+                    <button class="button" onclick="rectSelector()">
                         RECT
                     </button>
                 </div>
-                <div class="select" id="circle" onclick="circleSelector()">
-                    <button class="button">
+                <div class="select" id="circle" data-shape="circle">
+                    <button class="button" onclick="circleSelector()">
                         CIRCLE
                     </button>
                 </div>
-                <div class="select" id="line" onclick="lineSelector()">
-                    <button class="button">
+                <div class="select" id="line" data-shape="line">
+                    <button class="button" onclick="lineSelector()">
                         LINE
                     </button>
                 </div>
-                <div class="select" id="text" onclick="textSelector()">
-                    <button class="button">
+                <div class="select" id="text" data-shape="text">
+                    <button class="button" onclick="textSelector()">
                         TEXT
                     </button>
                 </div>
-                <div class="select" id="undo" onclick="undoSelector()">
-                    <button class="button">
+                <div class="other" id="colorPick">
+                    <input type="color" id ="color">
+                </div>
+                <div class="select" id="undo">
+                    <button class="button" onclick="undoSelector()">
                         UNDO
                     </button>
                 </div>
-                <div class="select" id="redo" onclick="redoSelector()">
-                    <button class="button">
+                <div class="select" id="redo">
+                    <button class="button" onclick="redoSelector()">
                         REDO
                     </button>
                 </div>
             </div>
             <canvas id="canvas">
+                Not supported
             </canvas>
         </div>
-        <script src="main.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" charset="utf-8"></script>
+        <script src="shapes.js" charset="utf-8"></script>
+        <script src="drawio.js" charset="utf-8"></script>
     </body>
 </html>
