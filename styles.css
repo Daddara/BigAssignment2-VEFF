@@ -53,4 +53,6 @@ body{
     display: grid;
     /* background-color: blueviolet; */
     grid-template-rows: 15% 120% 2%;
+    align-items: center;
+    justify-items: center;
 }
