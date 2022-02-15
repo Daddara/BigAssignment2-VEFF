@@ -5,6 +5,7 @@
 function Shape(position, color) {
     this.position = position;
     this.color = color;
+    this.lineWidth = drawio.lineWidth;
 };
 
 Shape.prototype.render = function () {};
@@ -20,7 +21,6 @@ function Rectangle(position, width, height, color) {
     this.width = width;
     this.height = height;
     this.color = color;
-    console.log(color);
 };
 
 // Assign the prototype
@@ -53,6 +53,7 @@ Pen.prototype.constructor = Pen;
 
 Pen.prototype.render = function () {
     drawio.ctx.strokeStyle = this.color;
+    drawio.ctx.lineWidth = this.lineWidth;
     drawio.ctx.lineCap = 'round';
     drawio.ctx.beginPath();
     for (var i = 0; i < this.points.length; i++) {

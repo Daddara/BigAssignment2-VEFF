@@ -2,6 +2,7 @@ window.drawio = {
     shapes: [],
     selectedShape: 'pen',
     drawColor: "#000000",
+    lineWidth: 8,
     canvas: document.getElementById('canvas'),
     ctx: document.getElementById('canvas').getContext('2d'),
     selectedElement: null,
@@ -14,7 +15,7 @@ window.drawio = {
 };
 
 drawio.canvas.width = 1000;
-drawio.canvas.height = 500;
+drawio.canvas.height = 600;
 
 $(function () {
     // Document is loaded and parsed
@@ -52,6 +53,7 @@ $(function () {
             case drawio.availableShapes.LINE:
                 console.log("WE HAVE LINE");
                 drawio.selectedElement = new Line(pos, 0, 0, drawio.drawColor);
+                break;
         }
     });
 
@@ -71,6 +73,12 @@ $(function () {
             drawio.shapes.push(drawio.selectedElement);
             drawio.selectedElement = null;
         }
+    });
+
+    // lineWidth Change
+    $('#range').on('change', function () {
+        console.log("Changing ", $("#range").val());
+        drawio.lineWidth = $("#range").val();
     });
 });
 
@@ -129,32 +137,3 @@ colorInput.addEventListener('input', () =>{
 //     }
 //     event.preventDefault();
 // }
-
-
-function penSelector(){
-    console.log("INSIDE PEN");
-}
-
-function rectSelector(){
-    console.log("INSIDE rect");
-}
-
-function circleSelector(){
-    console.log("circle INSIDE");
-}
-
-function lineSelector(){
-    console.log("here draw line");
-}
-
-function textSelector(){
-    console.log("Write txt");
-}
-
-function undoSelector(){
-    console.log("UNDO here");
-}
-
-function redoSelector(){
-    console.log("here we redo");
-}
