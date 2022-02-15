@@ -2,6 +2,7 @@ window.drawio = {
     shapes: [],
     selectedShape: 'pen',
     drawColor: "#000000",
+    lineWidth: 8,
     canvas: document.getElementById('canvas'),
     ctx: document.getElementById('canvas').getContext('2d'),
     selectedElement: null,
@@ -12,7 +13,7 @@ window.drawio = {
 };
 
 drawio.canvas.width = 1000;
-drawio.canvas.height = 500;
+drawio.canvas.height = 600;
 
 $(function () {
     // Document is loaded and parsed
@@ -61,6 +62,12 @@ $(function () {
             drawio.shapes.push(drawio.selectedElement);
             drawio.selectedElement = null;
         }
+    });
+
+    // lineWidth Change
+    $('#range').on('change', function () {
+        console.log("Changing ", $("#range").val());
+        drawio.lineWidth = $("#range").val();
     });
 });
 
