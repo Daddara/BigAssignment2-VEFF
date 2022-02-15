@@ -89,6 +89,7 @@ Circle.prototype.render = function () {
     drawio.ctx.beginPath();
     drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
     console.log("Render circle")
+    drawio.ctx.lineWidth = this.lineWidth;
     drawio.ctx.strokeStyle = this.color;
     drawio.ctx.stroke();
     drawio.ctx.closePath();
@@ -122,6 +123,7 @@ Line.prototype.render = function () {
     drawio.ctx.moveTo(this.position.x, this.position.y);
     drawio.ctx.lineTo(this.width+this.position.x, this.height+this.position.y);
     console.log("Render line")
+    drawio.ctx.lineWidth = this.lineWidth;
     drawio.ctx.strokeStyle = this.color;
     drawio.ctx.stroke();
     drawio.ctx.closePath();
