@@ -49,6 +49,22 @@ Rectangle.prototype.resize = function (x, y) {
     this.height = y - this.position.y;
 };
 
+Rectangle.prototype.move = function (x, y){
+    if(this.position.x < x){
+        console.log("BIGGER new X!!!!!", x);
+    }
+    drawio.ctx.clearRect(this.position.x + this.lineWidth, this.position.y + this.lineWidth, this.width + this.lineWidth, this.height + this.lineWidth);
+    this.position.x = x;
+    this.position.y = y;
+    if (this.fill){
+        drawio.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    }
+    else{
+        drawio.ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
+        drawio.ctx.strokeStyle = this.color;
+    }
+}
+
 
 function Pen(position, color) {
     Shape.call(this, position);

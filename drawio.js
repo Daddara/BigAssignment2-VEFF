@@ -9,6 +9,8 @@ window.drawio = {
     fontSize: 10,
     font: "Arial",
     drag: false,
+    dragok: false,
+    selectedMove: null,
     canvas: document.getElementById('canvas'),
     ctx: document.getElementById('canvas').getContext('2d'),
     selectedElement: null,
@@ -57,22 +59,31 @@ $(function () {
     $('#pen').addClass('selected');
     $('#stroke').addClass('fillselected');
     function drawCanvas() {
+        console.log(drawio.selectedElement);
         if (drawio.selectedElement) {
             drawio.selectedElement.render();
         }
         for (var i = 0; i < drawio.shapes.length; i++) {
             drawio.shapes[i].render();
         }
+        console.log(drawio.shapes.length);
     };
 
     $('.select').on('click', function () {
         $('.select').removeClass('selected');
         console.log(this);
         $(this).addClass('selected');
+        if(this.id != "move"){
+            $('#canvas').css("cursor", "default");
+            drawio.drag = false;
+        }
         drawio.selectedShape = $(this).data('shape');
     });
 
-    $('')
+    $('#move').on('click', function(){
+        drawio.drag = true;
+        $('#canvas').css("cursor", "grab");
+    })
 
 
     // mousedown
@@ -80,8 +91,24 @@ $(function () {
         var pos = { x: mouseEvent.offsetX, y: mouseEvent.offsetY };
         console.log("mousedown", pos);
         if(drawio.drag){
+            $('#canvas').css("cursor", "grabbing");
+            // Get
+            drawio.dragok = true;
+            drawio.selectedMove = getPressedPiece(mouseEvent);
+            if(drawio.selectedMove != null){
+                console.log("DRAG ME !!!");
+                var index = drawio.shapes.indexOf(drawio.selectedMove);
+                if(index > -1){
+                    drawio.shapes.splice(index, 1);
+                    drawio.shapes.push(drawio.selectedMove);
+                }
+                drawio.selectedMove.offset = {
+                    x: pos.x - drawio.selectedMove.position.x,
+                    y: pos.y - drawio.selectedMove.position.y
+                }
+            }
             // Drag elem
-        }
+    }
         switch (drawio.selectedShape) {
             case drawio.availableShapes.RECTANGLE:
                 drawio.selectedElement = new Rectangle(pos, 0, 0, drawio.drawColor);
@@ -119,6 +146,18 @@ $(function () {
 
     // mousemove
     $('#canvas').on('mousemove', function (mouseEvent) {
+        if(drawio.dragok){
+            //Start dragging
+            if(drawio.selectedMove != null){
+                // console.log("MEMEME",drawio.selectedMove);
+                console.log("MOUSE X",mouseEvent.offsetX);
+                console.log("REAL X",drawio.selectedMove.position.x);
+                drawio.selectedMove.position.x = mouseEvent.offsetX - drawio.selectedMove.offset.x;
+                drawio.selectedMove.position.y = mouseEvent.offsetY - drawio.selectedMove.offset.y;
+                drawio.selectedMove.move(drawio.selectedMove.position.x, drawio.selectedMove.position.y);
+            }
+        //    console.log("MOVING");
+        }
         if (drawio.selectedElement) {
             drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
             drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
@@ -129,13 +168,17 @@ $(function () {
     // mouseup
     $('#canvas').on('mouseup', function () {
         console.log("upmouse", drawio.selectedElement);
+        drawio.dragok = false;
+        if(drawio.drag){
+            $('#canvas').css("cursor", "grab");
+            drawio.selectedMove = null;
+        }
         if (drawio.selectedElement && drawio.selectedElement != 'Text') {
             $input.css("display", "none").val("");
             drawio.shapes.push(drawio.selectedElement);
             drawCanvas();
             drawio.selectedElement = null;
         }
-       drawio.drag = false;
     });
 
     // lineWidth Change
@@ -346,6 +389,22 @@ $(function () {
     var hell = myStorage.getItem("canvas");
 });
 
+
+function getPressedPiece(loc){
+    console.log(loc);
+    console.log("MY SHAPES",drawio.shapes);
+    for(var i = drawio.shapes.length -1; i >= 0 ; i--){
+        console.log("MY SHAPES",drawio.shapes[i]);
+        console.log("X",loc.x);
+        console.log("Y",loc.y);
+        if(loc.offsetX > drawio.shapes[i].position.x && loc.offsetX < drawio.shapes[i].position.x + drawio.shapes[i].width &&
+            loc.offsetY >drawio.shapes[i].position.y && loc.offsetY < drawio.shapes[i].position.y + drawio.shapes[i].height){
+                console.log("INSIDE!!!!!");
+                return drawio.shapes[i];
+            }
+        return null;
+    }
+}
 // const canvas = document.getElementById("canvas");
 // canvas.width = 1000;
 // canvas.height = 500;
