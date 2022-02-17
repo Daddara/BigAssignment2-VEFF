@@ -110,7 +110,7 @@ function Line(position, height, width, color) {
     this.height = height;
     this.width = width;
     this.color = color;
-    console.log(color);
+    // console.log(color);
 };
 
 // Assign the prototype
@@ -134,3 +134,26 @@ Line.prototype.resize = function (x, y) {
     this.width = (x - this.position.x);
     this.height = (y - this.position.y);
 };
+
+
+// Text
+function Text(position, height, width, font, size){
+    Shape.call(this, position);
+    this.height = height;
+    this.width = width;
+    this.color = color;
+    this.font = font;
+    this.size = size;
+    this.text = drawio.txt;
+}
+
+// Assign the prototype
+Text.prototype = Object.create(Shape.prototype);
+Text.prototype.constructor = Text;
+
+Text.prototype.render = function(){
+    // Render text
+    drawio.ctx.fillStyle = this.color;
+    drawio.ctx.font = this.font
+    drawio.ctx.fillText(this.text, this.position.x, this.position.y);
+}
