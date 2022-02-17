@@ -36,7 +36,10 @@ Rectangle.prototype.render = function () {
         drawio.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
     else{
-        drawio.ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);}
+        drawio.ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
+        drawio.ctx.strokeStyle = this.color;
+    }
+        
     console.log(this.color);
     
 };
@@ -97,9 +100,13 @@ Circle.prototype.render = function () {
     drawio.ctx.strokeStyle = this.color;
     if (this.fill){
         drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-        drawio.ctx.fill();}
-    drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-    drawio.ctx.stroke();
+        drawio.ctx.fill();
+    }
+    else{
+        drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
+        drawio.ctx.strokeStyle = this.color;
+        drawio.ctx.stroke();
+    }
         // console.log("Render circle")
     drawio.ctx.closePath();
     
