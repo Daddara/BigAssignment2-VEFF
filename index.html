@@ -25,11 +25,20 @@
                 </div>
                 <div class="line" title="Line Width" id="lineWidth">
                     Line Width
-                    <input type="range" min="1" max="100" id ="range" value="8"  oninput="amount.value=range.value">
-                    <output id="amount" name="amount" for="rangeInput">8</output>
+                    <input type="range" min="1" max="100" id ="lineRange" value="8"  oninput="amount.value=lineRange.value">
+                    <output id="amount" name="amount" for="lineRange">8</output>
                 </div>
                 <div class="select" id="text" title="Text" data-shape="text">
                     <img src="./icons/text.png" class="icon"/>
+                </div>
+                <div class="line" title="Line Width" id="lineWidth">
+                    Font Size
+                    <input type="range" min="1" max="100" id ="fontsize" value="10"  oninput="fontout.value=fontsize.value">
+                    <output id="fontout" name="fontout" for="rangeInput">10</output>
+                </div>
+                <div class="line" title="Line Width" id="lineWidth">
+                    Font
+                    <select id="select"></select>
                 </div>
                 <div class="other" title="Color Picker" id="colorPick">
                     <input type="color" id ="color">
@@ -56,7 +65,9 @@
             <canvas id="canvas">
                 Not supported
             </canvas>
+            <input type="text" id="canvasInput" />
         </div>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" charset="utf-8"></script>
         <script src="shapes.js" charset="utf-8"></script>
         <script src="drawio.js" charset="utf-8"></script>
