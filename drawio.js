@@ -162,6 +162,7 @@ $(function () {
                     console.log(data[i]);
                     var tmp = new Rectangle(data[i].Rectangle.position, data[i].Rectangle.width, data[i].Rectangle.height, data[i].Rectangle.color);
                     tmp.lineWidth = data[i].Rectangle.lineWidth;
+                    tmp.fill = data[i].Rectangle.fill;
                     data[i] = tmp;
                     // drawio.selectedElement = new Rectangle(pos, 0, 0, drawio.drawColor);
                     break;
@@ -179,6 +180,7 @@ $(function () {
                     console.log(data[i]);
                     var tmp = new Circle(data[i].Circle.position, data[i].Circle.width, data[i].Circle.height, data[i].Circle.radius, data[i].Circle.color);
                     tmp.lineWidth = data[i].Circle.lineWidth;
+                    tmp.fill = data[i].Circle.fill;
                     data[i] = tmp;
                     // drawio.selectedElement = new Circle(pos, 0, 0, 0, drawio.drawColor);
                     break;
