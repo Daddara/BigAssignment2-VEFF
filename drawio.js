@@ -6,11 +6,12 @@ window.drawio = {
     drawColor: "#000000",
     lineWidth: 8,
     txt: '',
-    fontSize: 10,
+    fontSize: 15,
     font: "Arial",
     canvas: document.getElementById('canvas'),
     ctx: document.getElementById('canvas').getContext('2d'),
     selectedElement: null,
+    textElement: null,
     availableShapes: {
         RECTANGLE: 'rectangle',
         PEN: 'pen',
@@ -21,7 +22,7 @@ window.drawio = {
 };
 
 drawio.canvas.width = 1000;
-drawio.canvas.height = 600;
+drawio.canvas.height = 700;
 
 var selectOption = document.getElementById('select');
 var fontArr =  [
@@ -54,6 +55,7 @@ $(function () {
     var $input = $("#canvasInput");
     var tool = {};
     $('#pen').addClass('selected');
+    $('#stroke').addClass('fillselected');
     function drawCanvas() {
         if (drawio.selectedElement) {
             drawio.selectedElement.render();
@@ -68,7 +70,9 @@ $(function () {
         console.log(this);
         $(this).addClass('selected');
         drawio.selectedShape = $(this).data('shape');
+        $input.css("display", "none");
     });
+
 
     // mousedown
     $('#canvas').on('mousedown', function (mouseEvent) {
@@ -91,9 +95,7 @@ $(function () {
                 drawio.selectedElement = new Line(pos,0, 0, drawio.drawColor);
                 break;
             case drawio.availableShapes.TEXT:
-                console.log("TEXT");
-                console.log($('#canvas').offset().left);
-                console.log(pos.x);
+                // console.log("TEXT");
                 tool.startx = pos.x + $('#canvas').offset().left;
                 tool.starty = pos.y + $('#canvas').offset().top;
                 $input.css({
@@ -102,9 +104,10 @@ $(function () {
                   left: tool.startx,
                   top: tool.starty
                 });
-                $input.focus();
                 drawio.selectedElement = new Text(pos, 0, 0);
-                break;
+                $input.focus();
+                
+                break
             
         }
     });
@@ -121,10 +124,11 @@ $(function () {
     // mouseup
     $('#canvas').on('mouseup', function () {
         console.log("upmouse", drawio.selectedElement);
-        if (drawio.selectedElement && drawio.selectedElement != 'Text') {
+        if (drawio.selectedElement || drawio.selectedElement != 'Text') {
             $input.css("display", "none").val("");
             drawio.shapes.push(drawio.selectedElement);
             drawCanvas();
+            drawio.txt = '';
             drawio.selectedElement = null;
         }
     });
@@ -140,29 +144,93 @@ $(function () {
         drawio.fontSize = $("#fontsize").val();
     });
 
-    $('select').on('change', function() {
+    $('#select').on('change', function() {
         console.log( this.value );
         drawio.font = this.value;
       });
+
     // text input
     $('#canvasInput').on('input', function () {
+
         drawio.Text = $('#canvasInput').val();
     });
+
+    // Save select
+    $('#savedSelect').on('change', function() {
+        console.log( this.value );
+        var data = JSON.parse(myStorage.getItem(this.value));
+        console.log("SUCK ME ",data);
+        for(var i = 0; i < data.length; i++){
+            switch (Object.keys(data[i])[0]){
+                case "Rectangle":
+                    console.log("RECT");
+                    console.log(data[i]);
+                    var tmp = new Rectangle(data[i].Rectangle.position, data[i].Rectangle.width, data[i].Rectangle.height, data[i].Rectangle.color);
+                    tmp.lineWidth = data[i].Rectangle.lineWidth;
+                    tmp.fill = data[i].Rectangle.fill;
+                    data[i] = tmp;
+                    // drawio.selectedElement = new Rectangle(pos, 0, 0, drawio.drawColor);
+                    break;
+                case "Pen":
+                    console.log("WE HAVE PEN");
+                    console.log(data[i]);
+                    var tmp = new Pen(data[i].Pen.position, data[i].Pen.color);
+                    tmp.points = data[i].Pen.points;
+                    tmp.lineWidth = data[i].Pen.lineWidth;
+                    data[i] = tmp; 
+                    // drawio.selectedElement = new Pen(pos, drawio.drawColor);
+                    break;
+                case "Circle":
+                    console.log("WE HAVE CIRCLE");
+                    console.log(data[i]);
+                    var tmp = new Circle(data[i].Circle.position, data[i].Circle.width, data[i].Circle.height, data[i].Circle.radius, data[i].Circle.color);
+                    tmp.lineWidth = data[i].Circle.lineWidth;
+                    tmp.fill = data[i].Circle.fill;
+                    data[i] = tmp;
+                    // drawio.selectedElement = new Circle(pos, 0, 0, 0, drawio.drawColor);
+                    break;
+                case "Line":
+                    console.log("WE HAVE LINE");
+                    console.log(data[i]);
+                    var tmp = new Line(data[i].Line.position, data[i].Line.height, data[i].Line.width, data[i].Line.color);
+                    tmp.lineWidth = data[i].Line.lineWidth;
+                    data[i] = tmp;
+                    // drawio.selectedElement = new Line(pos,0, 0, drawio.drawColor);
+                    break
+                case "Text":
+                    console.log("TExT");
+                    console.log(data[i]);
+                    var tmp = new Text(data[i].Text.position, 0, 0);
+                    tmp.lineWidth = data[i].Text.lineWidth;
+                    tmp.font = data[i].Text.font;
+                    tmp.fontSize = data[i].Text.fontSize;
+                    tmp.text = data[i].Text.text;
+                    data[i] = tmp;
+                    break
+            }
+        }
+        drawio.shapes = [];
+        drawio.shapesUndone =[];
+        drawio.shapes = data;
+        drawCanvas();
+      });
 
     $input.keyup(function(e) {
         //Pressing enter to put the text to the canvas
         if (e.keyCode === 13) {
             e.preventDefault();
             // drawio.ctx.font = 12 + "px sans-serif";
-            console.log("VAL", $input.val());
             drawio.txt = $input.val();
+            console.log(drawio.txt);
             if($input.val() !== ""){
+                drawio.selectedElement.text = drawio.txt;
                 drawio.selectedElement.render();
                 console.log(drawio.selectedElement);
                 drawio.shapes.push(drawio.selectedElement); 
                 
             }
             drawCanvas();
+            drawio.txt = '';
             drawio.selectedElement = null;
             //set the display to none for the input and erase its value
             $input.css("display", "none").val("");
@@ -219,9 +287,58 @@ $(function () {
         console.log("Stroke");
     });
 
+    $('.fillselect').on('click', function () {
+        $('.fillselect').removeClass('fillselected');
+        console.log(this);
+        $(this).addClass('fillselected');
+    });
 
-
-
+    // Save and load
+    myStorage = window.localStorage;
+    $('#save').on('click', function () {
+        var fileNames = [];
+        for (var j = 0; j < myStorage.length; j++) {
+            fileNames.push(myStorage.key(j));
+        }
+        var fileName = window.prompt("Please give your drawing a name: ");
+        var newShapeArr = [];
+        for(var k = 0; k < drawio.shapes.length; k++){
+            var strobj = {};
+            console.log(drawio.shapes[k]);
+            if(drawio.shapes[k] instanceof Pen){
+                console.log("This is Pen with nr: ", k);
+                strobj = {'Pen': drawio.shapes[k]};  
+            }
+            else if(drawio.shapes[k] instanceof Rectangle){
+                strobj = {'Rectangle': drawio.shapes[k]};
+            }
+            else if(drawio.shapes[k] instanceof Circle){
+                strobj = {'Circle': drawio.shapes[k]};
+            }
+            else if(drawio.shapes[k] instanceof Text){
+                strobj = {'Text': drawio.shapes[k]};
+            }
+            else if(drawio.shapes[k] instanceof Line){
+                strobj = {'Line': drawio.shapes[k]};
+            }
+            newShapeArr.push(strobj);
+            
+        }
+        console.log(JSON.stringify(newShapeArr));
+        myStorage.setItem(fileName,  JSON.stringify(newShapeArr));
+    });
+    
+    console.log(myStorage);
+    var savedOption = document.getElementById('savedSelect');
+    for(var j = 0; j < myStorage.length; j++){
+        var myKey = myStorage.key(j);
+        console.log(myKey);
+        var opt = document.createElement("option");
+        opt.value = myKey;
+        opt.text = myKey;
+        savedOption.appendChild(opt);
+    }
+    var hell = myStorage.getItem("canvas");
 });
 
 // const canvas = document.getElementById("canvas");
@@ -239,8 +356,6 @@ let colorInput = document.querySelector("#color");
 colorInput.addEventListener('input', () =>{
     console.log(colorInput.value);
     drawio.drawColor = colorInput.value;
-    // console.log(drawio.ctx);
-    // drawio.ctx.fillStyle = draw_color;
     
 });
 
