@@ -53,7 +53,7 @@ Rectangle.prototype.move = function (x, y){
     if(this.position.x < x){
         console.log("BIGGER new X!!!!!", x);
     }
-    drawio.ctx.clearRect(this.position.x + this.lineWidth, this.position.y + this.lineWidth, this.width + this.lineWidth, this.height + this.lineWidth);
+    drawio.ctx.clearRect(this.position.x + this.lineWidth, this.position.y - this.lineWidth, this.width + this.lineWidth, this.height + this.lineWidth);
     this.position.x = x;
     this.position.y = y;
     if (this.fill){
