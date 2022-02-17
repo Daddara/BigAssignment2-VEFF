@@ -35,8 +35,7 @@ var fontArr =  [
     "Courier New",
     "Brush Script"
 ];
-for(var i = 0;i<fontArr.length;i++)
-{ 
+for(var i = 0;i<fontArr.length;i++){ 
     var opt = document.createElement("option");
     if(fontArr[i] === "Times"){
         opt.value = "Times New Roman";
@@ -174,7 +173,6 @@ $(function () {
           $input.css("display", "none").val("");
         }
       });
-});
 
 
     //clear canvas
