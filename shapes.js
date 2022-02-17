@@ -6,6 +6,7 @@ function Shape(position, color) {
     this.position = position;
     this.color = color;
     this.lineWidth = drawio.lineWidth;
+    this.fill = drawio.shapeFiller;
 };
 
 Shape.prototype.render = function () {};
@@ -30,7 +31,12 @@ Rectangle.prototype.constructor = Rectangle;
 Rectangle.prototype.render = function () {
     // Render a rectangle
     drawio.ctx.fillStyle = this.color;
-    drawio.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    drawio.ctx.lineWidth = this.lineWidth;
+    if (this.fill){
+        drawio.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    }
+    else{
+        drawio.ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);}
     console.log(this.color);
     
 };
@@ -85,13 +91,16 @@ Circle.prototype.constructor = Circle;
 
 Circle.prototype.render = function () {
     // Render a circle
-    drawio.ctx.fillStyle = this.color;
     drawio.ctx.beginPath();
-    drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-    // console.log("Render circle")
     drawio.ctx.lineWidth = this.lineWidth;
+    drawio.ctx.fillStyle = this.color;
     drawio.ctx.strokeStyle = this.color;
+    if (this.fill){
+        drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
+        drawio.ctx.fill();}
+    drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
     drawio.ctx.stroke();
+        // console.log("Render circle")
     drawio.ctx.closePath();
     
 };

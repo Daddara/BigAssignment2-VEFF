@@ -1,6 +1,7 @@
 window.drawio = {
     shapes: [],
     shapesUndone: [],
+    shapeFiller: false,
     selectedShape: 'pen',
     drawColor: "#000000",
     lineWidth: 8,
@@ -123,6 +124,7 @@ $(function () {
         if (drawio.selectedElement && drawio.selectedElement != 'Text') {
             $input.css("display", "none").val("");
             drawio.shapes.push(drawio.selectedElement);
+            drawCanvas();
             drawio.selectedElement = null;
         }
     });
@@ -177,26 +179,44 @@ $(function () {
 
     //clear canvas
     $('#new').on('click', function () {
+        if (drawio.shapes.length) {
         drawio.shapes = [],
         drawio.shapesUndone =[],
         drawCanvas(); 
         console.log("New Image");
+        }
     });
 
     //undo
     $('#undo').on('click', function () {
+        if (drawio.shapes.length){
         var undoItem = drawio.shapes.pop();
         drawio.shapesUndone.push(undoItem);
         drawCanvas(); 
         console.log("Undo");
-        });
+        }
+    });
 
     //redo
     $('#redo').on('click', function () {
+        if (drawio.shapesUndone.length){
         var redoitem = drawio.shapesUndone.pop();
         drawio.shapes.push(redoitem);
         drawCanvas(); 
         console.log("Redo");
+        }
+    });
+
+    //fill
+    $('#fill').on('click', function () {
+        drawio.shapeFiller = true;
+        console.log("Fill");
+    });
+
+    //stroke
+    $('#stroke').on('click', function () {
+        drawio.shapeFiller = false;
+        console.log("Stroke");
     });
 
 
