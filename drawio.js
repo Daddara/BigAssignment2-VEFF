@@ -97,7 +97,7 @@ $(function () {
             case drawio.availableShapes.LINE:
                 console.log("WE HAVE LINE");
                 drawio.selectedElement = new Line(pos,0, 0, drawio.drawColor);
-                break
+                break;
             case drawio.availableShapes.TEXT:
                 console.log("TEXT");
                 console.log($('#canvas').offset().left);
@@ -112,7 +112,7 @@ $(function () {
                 });
                 $input.focus();
                 drawio.selectedElement = new Text(pos, 0, 0);
-                break
+                break;
             
         }
     });
@@ -262,7 +262,7 @@ $(function () {
 
     //undo
     $('#undo').on('click', function () {
-        if (drawio.shapes.length){
+        if (drawio.shapes.length > 0){
         var undoItem = drawio.shapes.pop();
         drawio.shapesUndone.push(undoItem);
         drawCanvas(); 
