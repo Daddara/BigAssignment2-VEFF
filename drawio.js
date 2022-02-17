@@ -208,7 +208,10 @@ $(function () {
         }
         drawio.shapes = [];
         drawio.shapesUndone =[];
+        console.log("Before ",drawio.shapes);
+        drawio.ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawio.shapes = data;
+        console.log("After",drawio.shapes);
         drawCanvas();
       });
 
