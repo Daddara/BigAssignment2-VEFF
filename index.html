@@ -14,10 +14,6 @@
                 <div class="select" id="pen" title="Pen" data-shape="pen">
                     <img src="./icons/pen.png" class="icon"/>
                 </div>
-                <div class="line" title="Line Width" id="lineWidth">
-                    <input type="range" min="1" max="100" id ="range" value="8"  oninput="amount.value=range.value">
-                    <output id="amount" name="amount" for="rangeInput">8</output>
-                </div>
                 <div class="select" id="rect" title="Rectangle" data-shape="rectangle">
                     <img src="./icons/rectangle.png" class="icon"/>
                 </div>
@@ -26,6 +22,11 @@
                 </div>
                 <div class="select" id="line" title="Line" data-shape="line">
                     <img src="./icons/line.png" class="icon"/>
+                </div>
+                <div class="line" title="Line Width" id="lineWidth">
+                    Line Width
+                    <input type="range" min="1" max="100" id ="range" value="8"  oninput="amount.value=range.value">
+                    <output id="amount" name="amount" for="rangeInput">8</output>
                 </div>
                 <div class="select" id="text" title="Text" data-shape="text">
                     <img src="./icons/text.png" class="icon"/>
