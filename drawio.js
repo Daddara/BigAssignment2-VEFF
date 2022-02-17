@@ -6,7 +6,7 @@ window.drawio = {
     drawColor: "#000000",
     lineWidth: 8,
     txt: '',
-    fontSize: 10,
+    fontSize: 15,
     font: "Arial",
     canvas: document.getElementById('canvas'),
     ctx: document.getElementById('canvas').getContext('2d'),
@@ -69,6 +69,7 @@ $(function () {
         console.log(this);
         $(this).addClass('selected');
         drawio.selectedShape = $(this).data('shape');
+        $input.css("display", "none");
     });
 
     // mousedown
