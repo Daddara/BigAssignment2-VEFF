@@ -1,5 +1,6 @@
 window.drawio = {
     shapes: [],
+    shapesUndone: [],
     selectedShape: 'pen',
     drawColor: "#000000",
     lineWidth: 8,
@@ -82,6 +83,34 @@ $(function () {
         console.log("Changing ", $("#range").val());
         drawio.lineWidth = $("#range").val();
     });
+
+
+    //clear canvas
+    $('#new').on('click', function () {
+        drawio.shapes = [],
+        drawio.shapesUndone =[],
+        drawCanvas(); 
+        console.log("New Image");
+    });
+
+    //undo
+    $('#undo').on('click', function () {
+        var undoItem = drawio.shapes.pop();
+        drawio.shapesUndone.push(undoItem);
+        drawCanvas(); 
+        console.log("Undo");
+        });
+
+    //redo
+    $('#redo').on('click', function () {
+        var redoitem = drawio.shapesUndone.pop();
+        drawio.shapes.push(redoitem);
+        drawCanvas(); 
+        console.log("Redo");
+    });
+
+
+
 });
 
 // const canvas = document.getElementById("canvas");
