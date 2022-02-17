@@ -5,6 +5,8 @@ window.drawio = {
     drawColor: "#000000",
     lineWidth: 8,
     txt: '',
+    fontSize: 10,
+    font: "Arial",
     canvas: document.getElementById('canvas'),
     ctx: document.getElementById('canvas').getContext('2d'),
     selectedElement: null,
@@ -19,6 +21,33 @@ window.drawio = {
 
 drawio.canvas.width = 1000;
 drawio.canvas.height = 600;
+
+var selectOption = document.getElementById('select');
+var fontArr =  [
+    "Arial",
+    "Verdana",
+    "Helvetica",
+    "Tahoma",
+    "Trebuchet",
+    "Times",
+    "Georgia",
+    "Garamond",
+    "Courier New",
+    "Brush Script"
+];
+for(var i = 0;i<fontArr.length;i++)
+{ 
+    var opt = document.createElement("option");
+    if(fontArr[i] === "Times"){
+        opt.value = "Times New Roman";
+    }
+    else{
+        opt.value = fontArr[i];
+    }
+    opt.text = fontArr[i];
+    opt.className = fontArr[i];
+    selectOption.appendChild(opt);
+} 
 
 $(function () {
     // Document is loaded and parsed
@@ -74,7 +103,7 @@ $(function () {
                   top: tool.starty
                 });
                 $input.focus();
-                drawio.selectedElement = new Text(pos, 0, 0, "Arial", 12);
+                drawio.selectedElement = new Text(pos, 0, 0);
                 break
             
         }
@@ -100,11 +129,20 @@ $(function () {
     });
 
     // lineWidth Change
-    $('#range').on('change', function () {
-        console.log("Changing ", $("#range").val());
-        drawio.lineWidth = $("#range").val();
+    $('#lineRange').on('change', function () {
+        console.log("Changing ", $("#lineRange").val());
+        drawio.lineWidth = $("#lineRange").val();
     });
 
+    $('#fontsize').on('change', function () {
+        console.log("Fontsize change ", $("#fontsize").val());
+        drawio.fontSize = $("#fontsize").val();
+    });
+
+    $('select').on('change', function() {
+        console.log( this.value );
+        drawio.font = this.value;
+      });
     // text input
     $('#canvasInput').on('input', function () {
         drawio.Text = $('#canvasInput').val();

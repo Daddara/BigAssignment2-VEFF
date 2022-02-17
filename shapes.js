@@ -137,13 +137,13 @@ Line.prototype.resize = function (x, y) {
 
 
 // Text
-function Text(position, height, width, font, size){
+function Text(position, height, width){
     Shape.call(this, position);
     this.height = height;
     this.width = width;
     this.color = color;
-    this.font = font;
-    this.size = size;
+    this.fontSize = drawio.fontSize;
+    this.font = `${this.fontSize}px ${drawio.font}`;
     this.text = drawio.txt;
 }
 
