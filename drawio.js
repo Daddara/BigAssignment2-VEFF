@@ -8,6 +8,7 @@ window.drawio = {
     txt: '',
     fontSize: 10,
     font: "Arial",
+    drag: false,
     canvas: document.getElementById('canvas'),
     ctx: document.getElementById('canvas').getContext('2d'),
     selectedElement: null,
@@ -71,11 +72,16 @@ $(function () {
         drawio.selectedShape = $(this).data('shape');
     });
 
+    $('')
+
 
     // mousedown
     $('#canvas').on('mousedown', function (mouseEvent) {
         var pos = { x: mouseEvent.offsetX, y: mouseEvent.offsetY };
         console.log("mousedown", pos);
+        if(drawio.drag){
+            // Drag elem
+        }
         switch (drawio.selectedShape) {
             case drawio.availableShapes.RECTANGLE:
                 drawio.selectedElement = new Rectangle(pos, 0, 0, drawio.drawColor);
@@ -129,6 +135,7 @@ $(function () {
             drawCanvas();
             drawio.selectedElement = null;
         }
+       drawio.drag = false;
     });
 
     // lineWidth Change
