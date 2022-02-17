@@ -95,10 +95,10 @@ Circle.prototype.render = function () {
     drawio.ctx.lineWidth = this.lineWidth;
     drawio.ctx.fillStyle = this.color;
     drawio.ctx.strokeStyle = this.color;
-    drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
     if (this.fill){
         drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
         drawio.ctx.fill();}
+    drawio.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
     drawio.ctx.stroke();
         // console.log("Render circle")
     drawio.ctx.closePath();
@@ -143,11 +143,6 @@ Line.prototype.resize = function (x, y) {
     this.width = (x - this.position.x);
     this.height = (y - this.position.y);
 };
-
-
-
-
-
 
 
 
