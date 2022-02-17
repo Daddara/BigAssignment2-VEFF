@@ -19,6 +19,7 @@ drawio.canvas.height = 600;
 
 $(function () {
     // Document is loaded and parsed
+    $('#pen').addClass('selected');
     function drawCanvas() {
         if (drawio.selectedElement) {
             drawio.selectedElement.render();
@@ -30,6 +31,7 @@ $(function () {
 
     $('.select').on('click', function () {
         $('.select').removeClass('selected');
+        console.log(this);
         $(this).addClass('selected');
         drawio.selectedShape = $(this).data('shape');
     });
@@ -51,9 +53,9 @@ $(function () {
                 drawio.selectedElement = new Circle(pos, 0, 0, 0, drawio.drawColor);
                 break;
             case drawio.availableShapes.LINE:
-                console.log("WE HAVE LINE");
-                drawio.selectedElement = new Line(pos, 0, 0, drawio.drawColor);
-                break;
+                    console.log("WE HAVE LINE");
+                    drawio.selectedElement = new Line(pos,0, 0, drawio.drawColor);
+                    break
         }
     });
 
