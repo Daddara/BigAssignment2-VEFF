@@ -12,7 +12,7 @@
     height: 100%;
     /* background-color: red; */
     display: grid;
-    grid-template-columns: 10% 85%;
+    grid-template-columns: 16% 75%;
     gap: 2.5%;
   
 }
@@ -28,7 +28,8 @@
 #toolbar{
     display: grid;
     grid-auto-rows: auto;
-    grid-template-rows: 1fr 1fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     width: 100%;
     height: 72%;
     /* background-color: chartreuse; */
@@ -94,6 +95,24 @@ body{
 
 .selected{
     background-color: #d3ffd8;
+    box-shadow: -2px 1px 5px 3px black;
+}
+
+.fillselect{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    width: 80%;
+    height: 80%;
+    border-radius: 8px;
+    background-color: #e8e9eb;
+    border-style: solid;
+    /* box-shadow: -2px 1px 5px 3px black; */
+    cursor: pointer;
+}
+
+.fillselected{
+    background-color: #ffbe6d;
     box-shadow: -2px 1px 5px 3px black;
 }
 
