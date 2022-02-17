@@ -177,6 +177,34 @@ $(function () {
 });
 
 
+    //clear canvas
+    $('#new').on('click', function () {
+        drawio.shapes = [],
+        drawio.shapesUndone =[],
+        drawCanvas(); 
+        console.log("New Image");
+    });
+
+    //undo
+    $('#undo').on('click', function () {
+        var undoItem = drawio.shapes.pop();
+        drawio.shapesUndone.push(undoItem);
+        drawCanvas(); 
+        console.log("Undo");
+        });
+
+    //redo
+    $('#redo').on('click', function () {
+        var redoitem = drawio.shapesUndone.pop();
+        drawio.shapes.push(redoitem);
+        drawCanvas(); 
+        console.log("Redo");
+    });
+
+
+
+});
+
 // const canvas = document.getElementById("canvas");
 // canvas.width = 1000;
 // canvas.height = 500;
