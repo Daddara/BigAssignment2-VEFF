@@ -98,6 +98,24 @@ body{
     box-shadow: -2px 1px 5px 3px black;
 }
 
+.fillselect{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    width: 80%;
+    height: 80%;
+    border-radius: 8px;
+    background-color: #e8e9eb;
+    border-style: solid;
+    /* box-shadow: -2px 1px 5px 3px black; */
+    cursor: pointer;
+}
+
+.fillselected{
+    background-color: #ffbe6d;
+    box-shadow: -2px 1px 5px 3px black;
+}
+
 .icon{
     max-width: 50%;
     max-height: 50%;

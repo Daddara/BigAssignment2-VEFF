@@ -54,6 +54,7 @@ $(function () {
     var $input = $("#canvasInput");
     var tool = {};
     $('#pen').addClass('selected');
+    $('#stroke').addClass('fillselected');
     function drawCanvas() {
         if (drawio.selectedElement) {
             drawio.selectedElement.render();
@@ -69,6 +70,7 @@ $(function () {
         $(this).addClass('selected');
         drawio.selectedShape = $(this).data('shape');
     });
+
 
     // mousedown
     $('#canvas').on('mousedown', function (mouseEvent) {
@@ -278,6 +280,12 @@ $(function () {
     $('#stroke').on('click', function () {
         drawio.shapeFiller = false;
         console.log("Stroke");
+    });
+
+    $('.fillselect').on('click', function () {
+        $('.fillselect').removeClass('fillselected');
+        console.log(this);
+        $(this).addClass('fillselected');
     });
 
     // Save and load
