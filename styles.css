@@ -88,8 +88,11 @@
 
 body{
     display: grid;
+    background-image: url('./icons/background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
     /* background-color: blueviolet; */
-    background-color: rgb(181, 181, 181);
+    /* background-color: rgb(181, 181, 181); */
     grid-template-rows: 15% 120% 1% 1% 1%;
     grid-template-columns: auto;
     align-items: center;
