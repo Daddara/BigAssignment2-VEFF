@@ -81,8 +81,7 @@ Line.prototype.constructor = Line;
 
 Line.prototype.render = function () {
     // Render a line
-    drawio.ctx.fillStyle = this.color;
-    
+    drawio.ctx.strokeStyle = this.color;
     drawio.ctx.lineWidth = this.lineWidth;
     drawio.ctx.beginPath();
     drawio.ctx.moveTo(this.position.x, this.position.y);
