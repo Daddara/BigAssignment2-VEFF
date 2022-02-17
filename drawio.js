@@ -6,7 +6,7 @@ window.drawio = {
     drawColor: "#000000",
     lineWidth: 8,
     txt: '',
-    fontSize: 10,
+    fontSize: 15,
     font: "Arial",
     drag: false,
     dragok: false,
@@ -14,6 +14,7 @@ window.drawio = {
     canvas: document.getElementById('canvas'),
     ctx: document.getElementById('canvas').getContext('2d'),
     selectedElement: null,
+    textElement: null,
     availableShapes: {
         RECTANGLE: 'rectangle',
         PEN: 'pen',
@@ -78,6 +79,7 @@ $(function () {
             drawio.drag = false;
         }
         drawio.selectedShape = $(this).data('shape');
+        $input.css("display", "none");
     });
 
     $('#move').on('click', function(){
@@ -126,9 +128,7 @@ $(function () {
                 drawio.selectedElement = new Line(pos,0, 0, drawio.drawColor);
                 break;
             case drawio.availableShapes.TEXT:
-                console.log("TEXT");
-                console.log($('#canvas').offset().left);
-                console.log(pos.x);
+                // console.log("TEXT");
                 tool.startx = pos.x + $('#canvas').offset().left;
                 tool.starty = pos.y + $('#canvas').offset().top;
                 $input.css({
@@ -137,9 +137,10 @@ $(function () {
                   left: tool.startx,
                   top: tool.starty
                 });
-                $input.focus();
                 drawio.selectedElement = new Text(pos, 0, 0);
-                break;
+                $input.focus();
+                
+                break
             
         }
     });
@@ -177,6 +178,7 @@ $(function () {
             $input.css("display", "none").val("");
             drawio.shapes.push(drawio.selectedElement);
             drawCanvas();
+            drawio.txt = '';
             drawio.selectedElement = null;
         }
     });
@@ -199,6 +201,7 @@ $(function () {
 
     // text input
     $('#canvasInput').on('input', function () {
+
         drawio.Text = $('#canvasInput').val();
     });
 
@@ -270,15 +273,17 @@ $(function () {
         if (e.keyCode === 13) {
             e.preventDefault();
             // drawio.ctx.font = 12 + "px sans-serif";
-            console.log("VAL", $input.val());
             drawio.txt = $input.val();
+            console.log(drawio.txt);
             if($input.val() !== ""){
+                drawio.selectedElement.text = drawio.txt;
                 drawio.selectedElement.render();
                 console.log(drawio.selectedElement);
                 drawio.shapes.push(drawio.selectedElement); 
                 
             }
             drawCanvas();
+            drawio.txt = '';
             drawio.selectedElement = null;
             //set the display to none for the input and erase its value
             $input.css("display", "none").val("");
