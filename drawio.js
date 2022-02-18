@@ -85,7 +85,13 @@ $(function () {
     $('#move').on('click', function(){
         drawio.drag = true;
         $('#canvas').css("cursor", "grab");
+        $(this).addClass('selected');
     })
+
+    $('.otherfill').on('click', function(){
+        $('.otherfill').removeClass('fillselected');
+        $(this).addClass('fillselected');
+    });
 
 
     // mousedown
@@ -156,6 +162,9 @@ $(function () {
                 drawio.selectedMove.position.x = mouseEvent.offsetX - drawio.selectedMove.offset.x;
                 drawio.selectedMove.position.y = mouseEvent.offsetY - drawio.selectedMove.offset.y;
                 drawio.selectedMove.move(drawio.selectedMove.position.x, drawio.selectedMove.position.y);
+               
+                drawio.ctx.clearRect(0,0,canvas.width,canvas.height);
+                drawCanvas();
             }
         //    console.log("MOVING");
         }
@@ -303,6 +312,7 @@ $(function () {
         if (drawio.shapes.length) {
         drawio.shapes = [],
         drawio.shapesUndone =[],
+        drawio.ctx.clearRect(0,0,canvas.width,canvas.height);
         drawCanvas(); 
         console.log("New Image");
         }
@@ -311,10 +321,12 @@ $(function () {
     //undo
     $('#undo').on('click', function () {
         if (drawio.shapes.length > 0){
-        var undoItem = drawio.shapes.pop();
-        drawio.shapesUndone.push(undoItem);
-        drawCanvas(); 
-        console.log("Undo");
+            var undoItem = drawio.shapes.pop();
+            drawio.shapesUndone.push(undoItem);
+            drawio.selectedElement = null;
+            drawio.ctx.clearRect(0,0,canvas.width,canvas.height);
+            drawCanvas(); 
+            console.log("Undo");
         }
     });
 
@@ -345,6 +357,7 @@ $(function () {
         console.log(this);
         $(this).addClass('fillselected');
     });
+
 
     // Save and load
     myStorage = window.localStorage;
@@ -400,10 +413,15 @@ function getPressedPiece(loc){
     console.log("MY SHAPES",drawio.shapes);
     for(var i = drawio.shapes.length -1; i >= 0 ; i--){
         console.log("MY SHAPES",drawio.shapes[i]);
-        console.log("X",loc.x);
-        console.log("Y",loc.y);
-        if(loc.offsetX > drawio.shapes[i].position.x && loc.offsetX < drawio.shapes[i].position.x + drawio.shapes[i].width &&
-            loc.offsetY >drawio.shapes[i].position.y && loc.offsetY < drawio.shapes[i].position.y + drawio.shapes[i].height){
+        console.log("Offset X",loc.offsetX);
+        console.log("Offset Y",loc.offsetY);
+        console.log("X", drawio.shapes[i].position.x);
+        console.log("Y", drawio.shapes[i].position.y);
+        console.log("X MATH: ", drawio.shapes[i].position.x + drawio.shapes[i].width);
+        console.log("Y MATH: ", drawio.shapes[i].position.y + drawio.shapes[i].height);
+        
+        if(loc.offsetX >= drawio.shapes[i].position.x - (drawio.shapes[i].width) && loc.offsetX <= drawio.shapes[i].position.x + (drawio.shapes[i].width) &&
+            loc.offsetY >= drawio.shapes[i].position.y - (drawio.shapes[i].height) && loc.offsetY <= drawio.shapes[i].position.y + (drawio.shapes[i].height)){
                 console.log("INSIDE!!!!!");
                 return drawio.shapes[i];
             }
@@ -427,6 +445,11 @@ colorInput.addEventListener('input', () =>{
     drawio.drawColor = colorInput.value;
     
 });
+
+colorInput.addEventListener('onchange', () =>{
+    console.log(colorInput.value);
+    drawio.drawColor = colorInput.value;
+})
 
 // // canvas.addEventListener("touchstart", start, false);
 // // canvas.addEventListener("touchmove", draw, false);
@@ -463,3 +486,4 @@ colorInput.addEventListener('input', () =>{
 //     }
 //     event.preventDefault();
 // }
+

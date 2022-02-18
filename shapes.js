@@ -51,7 +51,7 @@ Rectangle.prototype.resize = function (x, y) {
 
 Rectangle.prototype.move = function (x, y){
     if(this.position.x < x){
-        console.log("BIGGER new X!!!!!", x);
+        // console.log("BIGGER new X!!!!!", x);
     }
     drawio.ctx.clearRect(this.position.x + this.lineWidth, this.position.y - this.lineWidth, this.width + this.lineWidth, this.height + this.lineWidth);
     this.position.x = x;
@@ -70,6 +70,12 @@ function Pen(position, color) {
     Shape.call(this, position);
     this.points = [];
     this.color = color;
+    this.maxX = 0;
+    this.minX = drawio.canvas.width;
+    this.maxY = 0;
+    this.minY = drawio.canvas.height;
+    this.width = 0;
+    this.height = 0;
 }
 
 // Assign the prototype
@@ -77,14 +83,37 @@ Pen.prototype = Object.create(Shape.prototype);
 Pen.prototype.constructor = Pen;
 
 Pen.prototype.render = function () {
+    console.log(this);
     drawio.ctx.strokeStyle = this.color;
     drawio.ctx.lineWidth = this.lineWidth;
     drawio.ctx.lineCap = 'round';
     drawio.ctx.beginPath();
     for (var i = 0; i < this.points.length; i++) {
         point = this.points[i];
+        if(point.x > this.maxX){
+            this.maxX = point.x;
+        }
+        if(point.x < this.minX){
+            this.minX = point.x;
+        }
+        if(point.y > this.maxY){
+            this.maxY = point.y;
+        }
+        if(point.y < this.minY){
+            this.minY = point.y;
+        }
         drawio.ctx.lineTo(point.x, point.y);
     }
+    if(this.minX == drawio.canvas.width || this.minY == drawio.canvas.height){
+
+    }
+    else{
+        this.width = this.maxX - this.minX;
+        this.height = this.maxY -this.minY;
+    }
+    // console.log("MAXs",this.maxX, this.maxY);
+    // console.log("MINS",this.minX, this.minY);
+    // console.log("WIDTH: ", this.width, " HEIGHT: ", this.height);
     drawio.ctx.stroke();
 };
 
@@ -92,6 +121,19 @@ Pen.prototype.resize = function (x, y) {
     this.points.push({ x: x, y: y});
 };
 
+Pen.prototype.move = function (x, y){
+    console.log("INSIDE MOVE PEN, here we have x and y:", x, y);
+    drawio.ctx.beginPath();
+    drawio.ctx.moveTo(x,y);
+    var xPlus = false;
+    var yPlus = false
+    for (var i = 0; i < this.points.length; i++) {
+        point = this.points[i];
+        drawio.ctx.lineTo(point.x ,point.y);
+    }
+    
+    drawio.ctx.stroke();
+}
 
 
 ////circle
@@ -101,7 +143,6 @@ function Circle(position, width, height, radius, color) {
     this.height = height;
     this.radius = radius;
     this.color = color;
-    console.log(color);
 };
 
 // Assign the prototype
