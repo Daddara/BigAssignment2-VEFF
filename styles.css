@@ -137,6 +137,8 @@ body{
     height: 80%;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    font-size:20px;
+    font-weight: bold;
 }
 
 #canvasInput {

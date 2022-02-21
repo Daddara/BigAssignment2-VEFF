@@ -205,7 +205,7 @@ Line.prototype.resize = function (x, y) {
 
 
 // Text
-function Text(position, height, width){
+function Text(position, height, width, color){
     Shape.call(this, position);
     this.height = height;
     this.width = width;

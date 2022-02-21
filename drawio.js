@@ -142,7 +142,7 @@ $(function () {
                   left: tool.startx,
                   top: tool.starty
                 });
-                drawio.selectedElement = new Text(pos, 0, 0);
+                drawio.selectedElement = new Text(pos, 0, 0, drawio.drawColor);
                 $input.focus();
                 
                 break
