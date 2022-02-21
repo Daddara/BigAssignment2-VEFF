@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Testing</title>
+        <title>DrawIO</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
@@ -62,7 +62,7 @@
                     <input type="range" min="1" max="100" id ="lineRange" value="8"  oninput="amount.value=lineRange.value">
                     <output id="amount" name="amount" for="lineRange">8</output>
                 </div>
-                <div class="names">Undo and redo:</div>
+                <div class="names">Undo redo:</div>
                 <div class="other" title="Undo" id="undo">
                     <img src="./icons/undo.png" class="icon"/>
                 </div>
@@ -76,20 +76,6 @@
                 <div class="otherfill" title="Fill" id="fill">
                     <img src="./icons/fill.png" class="icon"/>
                 </div>
-                <!-- <div class="names">Save and load:</div>
-                <div class="other" title="Save" id="save">
-                    <img src="./icons/save.png" class="icon"/>
-                </div>
-                <div class="line" title="Line Width" id="lineWidth">
-                    Load
-                    <select id="savedSelect">
-                        <option disabled selected value>----</option>
-                    </select>   
-                </div>
-                <div class="names">Clear board:</div>
-                <div class="other" title="New" id="new">
-                    <img src="./icons/trash.png" class="icon"/>
-                </div> -->
             </div>
             <canvas id="canvas">
                 Not supported
