@@ -83,7 +83,6 @@ Pen.prototype = Object.create(Shape.prototype);
 Pen.prototype.constructor = Pen;
 
 Pen.prototype.render = function () {
-    console.log(this);
     drawio.ctx.strokeStyle = this.color;
     drawio.ctx.lineWidth = this.lineWidth;
     drawio.ctx.lineCap = 'round';
@@ -111,9 +110,6 @@ Pen.prototype.render = function () {
         this.width = this.maxX - this.minX;
         this.height = this.maxY -this.minY;
     }
-    // console.log("MAXs",this.maxX, this.maxY);
-    // console.log("MINS",this.minX, this.minY);
-    // console.log("WIDTH: ", this.width, " HEIGHT: ", this.height);
     drawio.ctx.stroke();
 };
 
@@ -122,7 +118,6 @@ Pen.prototype.resize = function (x, y) {
 };
 
 Pen.prototype.move = function (x, y){
-    console.log("INSIDE MOVE PEN, here we have x and y:", x, y);
     drawio.ctx.beginPath();
     drawio.ctx.moveTo(x,y);
     var xPlus = false;
