@@ -6,11 +6,26 @@
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <h1 class="h1">
-            DrawIO
-        </h1>
+        <div id="head">
+            <h1 class="h1">
+                DrawIO
+            </h1>
+            <div class="headother" title="Save" id="save">
+                <img src="./icons/save.png" class="icon"/>
+            </div>
+            <div class="headother title="Line Width" id="lineWidth">
+                Load
+                <select id="savedSelect">
+                    <option disabled selected value>----</option>
+                </select>   
+            </div>
+            <div class="headother" title="New" id="new">
+                <img src="./icons/trash.png" class="icon"/>
+            </div>
+         </div>
         <div id="canvasDiv">
-            <div id="toolbar">
+            <div id="toolbar">   
+                <div class="names">Shapes and selectors:</div>
                 <div class="select" id="pen" title="Pen" data-shape="pen">
                     <img src="./icons/pen.png" class="icon"/>
                 </div>
@@ -29,6 +44,7 @@
                 <div class="select" title="Move" id="move">
                     <img src="./icons/hand.png" class="icon"/>
                 </div>
+                <div class="names">Configure settings:</div>
                 <div class="other" title="Color Picker" id="ColorPicker">
                     <input type="color" class="colorclass" id ="color">
                 </div>
@@ -38,42 +54,47 @@
                     <output id="fontout" name="fontout" for="rangeInput">10</output>
                 </div>
                 <div class="line" title="Line Width" id="lineWidth">
-                    <p class="text">Select Font</p>
+                    <p class="text">Font</p>
                     <select id="select"></select>
                 </div>
                 <div class="line" title="Line Width" id="lineWidth">
-                    <p class="text">Stroke Width</p>
+                    <p class="text">Width</p>
                     <input type="range" min="1" max="100" id ="lineRange" value="8"  oninput="amount.value=lineRange.value">
                     <output id="amount" name="amount" for="lineRange">8</output>
                 </div>
+                <div class="names">Undo and redo:</div>
                 <div class="other" title="Undo" id="undo">
                     <img src="./icons/undo.png" class="icon"/>
                 </div>
                 <div class="other" title="Redo" id="redo">
                     <img src="./icons/redo.png" class="icon"/>
                 </div>
+                <div class="names">Unfilled or filled:</div>
                 <div class="otherfill" title="Stroke" id="stroke">
                     <img src="./icons/stroke.png" class="icon"/>
                 </div>
                 <div class="otherfill" title="Fill" id="fill">
                     <img src="./icons/fill.png" class="icon"/>
                 </div>
+                <!-- <div class="names">Save and load:</div>
                 <div class="other" title="Save" id="save">
                     <img src="./icons/save.png" class="icon"/>
                 </div>
                 <div class="line" title="Line Width" id="lineWidth">
-                    Saved
+                    Load
                     <select id="savedSelect">
                         <option disabled selected value>----</option>
                     </select>   
                 </div>
+                <div class="names">Clear board:</div>
                 <div class="other" title="New" id="new">
                     <img src="./icons/trash.png" class="icon"/>
-                </div>
+                </div> -->
             </div>
             <canvas id="canvas">
                 Not supported
             </canvas>
+            
             <input type="text" id="canvasInput" />
         </div>
         
